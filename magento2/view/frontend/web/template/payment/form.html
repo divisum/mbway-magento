@@ -29,18 +29,31 @@
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
-
-        <div class="field required" id="ifthenpay_mb_way_control">
-            <label class="label">
-                <span>Telemóvel MBWAY</span>
-            </label>
-            <div class="control input-container">
-                <img src="https://ifthenpay.com/img/mbway.png" class="icon" alt="mbway logo">
-                <input name="payment[phone_number]" class="text input-field" type="text" id="phone_number"
-                    data-validate="{required:true, 'validate-phone-number': true}"
-                    data-bind="value: phoneNumber"/>
-            </div>
-        </div>
+        
+        <form id="mb_way-form" class="form mb_way-order" data-role="mb_way-form">
+            <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
+                <div class="field field-number required">
+                    <label for="phone_number" class="label" data-bind="attr: {for: getCode() + '_phone_phone'}">
+                        <span><!-- ko i18n: 'Phone Number'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <img src="https://ifthenpay.com/img/mbway.png" class="icon" alt="mbway logo">
+                        <input
+                            type="text"
+                            id="phone_number"
+                            name="payment[phone_number]"
+                            data-validate="{required:true, 'validate-phone-number': true}"
+                            data-bind='
+                                attr: {title: $t("Phone Number")},
+                                value: phoneNumber'
+                            class="input-text"
+                        />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        
+        <p class="mbway_warning"><!-- ko i18n: 'Por favor verifique se o montante da compra não ultrapassa o plafond do seu MB Way.'--><!-- /ko --></p>
         
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
