@@ -15,6 +15,8 @@ use Magento\Payment\Observer\AbstractDataAssignObserver;
 
 class AfterPlaceOrderObserver extends AbstractDataAssignObserver
 {
+    const CODE = 'mb_way';
+
     /**
      * Order Model
      *
@@ -33,16 +35,21 @@ class AfterPlaceOrderObserver extends AbstractDataAssignObserver
     {
         $orderId = $observer->getEvent()->getOrderIds();
         $order = $this->order->load($orderId);
-        $currentState = $order->getState();
+        $payment = $order->getPayment();
+        $methodcode = $payment->getMethodInstance()->getCode();
 
-        $save = false;
-        if ($currentState !== $order::STATE_NEW) {
-            $order->setState($order::STATE_PENDING_PAYMENT);
-            $order->setStatus('pending');
-            $save = true;
-        }
-        if ($save) {
-            $order->save();
+        if($methodcode == self::CODE){
+            $currentState = $order->getState();
+
+            $save = false;
+            if ($currentState !== $order::STATE_NEW) {
+                $order->setState($order::STATE_PENDING_PAYMENT);
+                $order->setStatus('pending');
+                $save = true;
+            }
+            if ($save) {
+                $order->save();
+            }
         }
     }
 }
