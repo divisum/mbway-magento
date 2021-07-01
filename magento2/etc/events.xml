@@ -17,7 +17,7 @@
         <observer name="ifthenpay_mb_way_gateway_data_assign" instance="Ifthenpay\MbWay\Observer\DataAssignObserver"/>
     </event>
     <event name="checkout_onepage_controller_success_action">
-        <observer name="checkout_controller_success_action" instance="Ifthenpay\MbWay\Observer\AfterPlaceOrderObserver"/>
-        <observer name="checkout_controller_success_action_sendmail" instance="Ifthenpay\MbWay\Observer\SendMailOnOrderSuccess"/>
+        <observer name="ifthenpay_mb_way_gateway_checkout_controller_success_action" instance="Ifthenpay\MbWay\Observer\AfterPlaceOrderObserver"/>
+        <observer name="ifthenpay_mb_way_gateway_checkout_controller_success_action_sendmail" instance="Ifthenpay\MbWay\Observer\SendMailOnOrderSuccess"/>
     </event>
 </config>
